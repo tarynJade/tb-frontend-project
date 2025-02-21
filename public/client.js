@@ -47,8 +47,64 @@ const postMessage = async () => {
   }
 };
 
+const getCats = async () => {
+  const resultElement = document.getElementById("result");
+  resultElement.textContent = "Loading..."; 
+
+  try {
+    const response = await fetch(`/api/get_cats`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    resultElement.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+  } catch (error) {
+    resultElement.textContent = `Error: ${error.message}`;
+  }
+};
+
+const postCat = async () => {
+  const resultElement = document.getElementById("result");
+  resultElement.textContent = "Loading...";
+
+  const breed = document.getElementById("breed").value;
+  const age = document.getElementById("age").value;
+
+  try {
+    const response = await fetch(`/api/new_cat`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ breed, age: Number(age) }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    resultElement.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+  } catch (error) {
+    resultElement.textContent = `Error: ${error.message}`;
+  }
+};
+
+
+
+
 document
   .getElementById("callFunction")
-  .addEventListener("click", getMessages);
+  .addEventListener("click", getCats);
+document
+  .getElementById("catFunction")
+  .addEventListener("click", postCat)
 
 // To begin try adding another button to use the postMessage function
