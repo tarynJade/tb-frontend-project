@@ -15,6 +15,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public')); // Serve static files from 'public' directory
+app.use(express.static('views'));
 
 // New POST endpoint
 app.post('/api/new_cat', async (req, res) => {
@@ -45,6 +46,11 @@ app.post('/api/new_cat', async (req, res) => {
 });
 
 // New GET endpoint
+
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
 app.get('/api/get_cats', async (req, res) => {
   try {
 
