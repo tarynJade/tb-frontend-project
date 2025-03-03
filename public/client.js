@@ -48,8 +48,8 @@ const postMessage = async () => {
 };
 
 const getCats = async () => {
-  const resultElement = document.getElementById("result");
-  resultElement.textContent = "Loading..."; 
+  const catCards = document.querySelectorAll(".cat-card")
+  catCards.textContent = "...loading";
 
   try {
     const response = await fetch(`/api/get_cats`, {
@@ -63,10 +63,19 @@ const getCats = async () => {
       throw new Error(`Error: ${response.status}`);
     }
 
-    const data = await response.json();
-    resultElement.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    const cats = await response.json();
+
+    cats.forEach((cat, index) => {
+      if(catCards[index]) {
+        catCards[index].innerHTML = 
+        `<img src="${cat.image_url}"/>
+        <h3>${cat.breed}</h3>
+        <p>${cat.description}</p>
+        `;
+      }
+    });
   } catch (error) {
-    resultElement.textContent = `Error: ${error.message}`;
+    catCards.textContent = `Error: ${error.message}`;
   }
 };
 
@@ -97,12 +106,13 @@ const postCat = async () => {
   }
 };
 
+window.addEventListener("DOMContentLoaded", getCats)
 
-document
-  .getElementById("callFunction")
-  .addEventListener("click", getCats);
-document
-  .getElementById("catFunction")
-  .addEventListener("click", postCat)
+// document
+//   .getElementById("callFunction")
+//   .addEventListener("click", getCats);
+// document
+//   .getElementById("catFunction")
+//   .addEventListener("click", postCat)
 
 // To begin try adding another button to use the postMessage function
