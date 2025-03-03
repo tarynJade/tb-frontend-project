@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -10,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+
 
 // Middleware
 app.use(cors());
@@ -48,7 +50,11 @@ app.post('/api/new_cat', async (req, res) => {
 // New GET endpoint
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
+app.get('/breeds', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'breeds.html'));
 });
 
 app.get('/api/get_cats', async (req, res) => {

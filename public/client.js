@@ -98,8 +98,6 @@ const postCat = async () => {
 };
 
 
-
-
 document
   .getElementById("callFunction")
   .addEventListener("click", getCats);
