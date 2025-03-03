@@ -59,5 +59,31 @@ body {
   color: #5c5a5a;
   margin-left:200px;
   margin-top:-100px;
-
 }
+
+.cat-container {
+  display: flex;
+  justify-content: center;
+  /* border: 2px solid gray; */
+  width: 1500px;
+  height: 530px;
+}
+
+.cat-card {
+  /* border: 2px solid gray; */
+  width: 350px;
+  height: 600px;
+  margin: 10px;
+}
+
+.cat-card img{
+  margin-left: 75px;
+  width: 200px;
+  height: 250px;
+}
+
+.cat-card h3{
+  text-align: center;
+}
+
+
