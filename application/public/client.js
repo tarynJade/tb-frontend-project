@@ -48,8 +48,8 @@ const postMessage = async () => {
 };
 
 const getCats = async () => {
-  const catCards = document.querySelectorAll(".cat-card")
-  catCards.textContent = "...loading";
+  const resultElement = document.getElementById("result")
+  resultElement.textContent = "...loading";
 
   try {
     const response = await fetch(`/api/get_cats`, {
@@ -63,19 +63,10 @@ const getCats = async () => {
       throw new Error(`Error: ${response.status}`);
     }
 
-    const cats = await response.json();
+    await response.json();
 
-    cats.forEach((cat, index) => {
-      if(catCards[index]) {
-        catCards[index].innerHTML = 
-        `<img src="${cat.image_url}"/>
-        <h3>${cat.breed}</h3>
-        <p>${cat.description}</p>
-        `;
-      }
-    });
   } catch (error) {
-    catCards.textContent = `Error: ${error.message}`;
+    resultElement.textContent = `Error: ${error.message}`;
   }
 };
 
