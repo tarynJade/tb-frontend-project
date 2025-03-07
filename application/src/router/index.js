@@ -24,6 +24,11 @@ const routes = [
         path:'/choose-for-me',
         name: 'random-cat',
         component: RandomCatView
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: LoginView
     }
 ]
 
