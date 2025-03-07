@@ -3,7 +3,7 @@
       <ul>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/cats">Cats</RouterLink>
-        <RouterLink to="/cat-of-the-day">Cat Of The Day</RouterLink>
+        <RouterLink to="/choose-for-me">Choose for Me!</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
       </ul>
     </nav>
