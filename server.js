@@ -14,7 +14,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 app.use(cors());
 app.use(express.json());
 
-
+// post cat
 app.post('/api/new_cat', async (req, res) => {
   try {
     const { breed, age } = req.body;
@@ -41,10 +41,10 @@ app.post('/api/new_cat', async (req, res) => {
   }
 });
 
+// get all cats
 app.get('/api/get_cats', async (req, res) => {
   try {
 
-    // Call the Supabase Edge Function for cats
     const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
       method: 'GET',
       headers: {
@@ -63,6 +63,37 @@ app.get('/api/get_cats', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// get single cat by breed
+app.get('/api/get_cat/:breed', async (req, res) => {
+  try {
+    const catBreed = req.params.breed;
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Supabase returned ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const cat = data.find(cat => cat.breed.toLowerCase() === catBreed.toLowerCase()); 
+
+    if (!cat) {
+      return res.status(404).json({ error: 'Cat not found' });
+    }
+
+    res.json(cat);
+  } catch (error) {
+    console.error('GET single cat request error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Start server
 app.listen(PORT, () => {
