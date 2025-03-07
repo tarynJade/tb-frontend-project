@@ -1,5 +1,6 @@
 <template>
   <NavigationComponent />
+  <button @click="sortCats">Sort Cats </button>
   <div class="breeds">
     <div class="cat-list">
       <div v-for="cat in cats" :key="cat.id" class="cat-card">
@@ -17,7 +18,8 @@ import NavigationComponent from "@/components/NavigationComponent.vue";
 
 export default {
   name: 'CatsView',
-  components: {NavigationComponent},
+  components: { NavigationComponent },
+  
   data() {
     return {
       cats: [],
@@ -35,7 +37,24 @@ export default {
         console.error('Error:', error)
         this.error = 'Failed to load cat breeds.'
       }
-    }
+    },
+      sortCats() {
+        if(this.cats.length === 0) {
+          console.log("No cats to sort");
+        }
+        this.cats.sort((a, b) => {
+          let catA = a.breed.toLowerCase(),
+              catB = b.breed.toLowerCase();
+          if (catA < catB) {
+            return -1;
+          }
+          if (catA > catB) {
+            return 1;
+          }
+          return 0;
+        });
+      },
+      
   },
   mounted() {
     this.getCats()
@@ -86,6 +105,17 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+button{
+  margin: 10px;
+  padding: 15px 30px;
+  color: beige;
+  border-radius: 10px;
+  background-color: #A12B44;
+  border: 0;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 </style>
