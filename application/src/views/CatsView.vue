@@ -3,9 +3,10 @@
   <div class="breeds">
     <div class="cat-list">
       <div v-for="cat in cats" :key="cat.id" class="cat-card">
-        <img :src="cat.image_url" :alt="cat.breed">
-        <h3>{{ cat.breed }}</h3>
-        <p>{{ cat.description }}</p>
+        <router-link :to="'/cat/' + cat.breed">
+          <img :src="cat.image_url" :alt="cat.breed">
+          <h3>{{ cat.breed }}</h3>
+        </router-link>
       </div>
     </div>
   </div>
@@ -15,7 +16,7 @@
 import NavigationComponent from "@/components/NavigationComponent.vue";
 
 export default {
-  name: 'BreedsView',
+  name: 'CatsView',
   components: {NavigationComponent},
   data() {
     return {
@@ -29,7 +30,6 @@ export default {
         const response = await fetch('/api/get_cats')
         if (!response.ok) throw new Error(`Error: ${response.status}`)
         const data = await response.json()
-        console.log('Fetched cats:', data)
         this.cats = data
       } catch (error) {
         console.error('Error:', error)
@@ -54,31 +54,38 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .cat-card {
-  width: 300px;
-  margin: 10px;
+  width: 250px;
+  margin: 20px;
   margin-top: 30px;
   padding: 10px;
   border: 1px solid #A12B44;
   border-radius: 10px;
   box-shadow: 5px 5px 5px #A12B44;
+  text-align: center;
 }
 
 .cat-card img {
   width: 100%;
+  height: 80%;
   border-radius: 10px;
 }
 
 .cat-card h3 {
-  color: #A12B44;
-  font-size: 20px;
+  color:bisque;
+  background-color: #A12B44;
+  font-size: 100%;
+  border: 2px solid #A12B44;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.cat-card p {
-  color: #5c5a5a;
-  font-size: 15px;
+a {
+  text-decoration: none;
 }
 
 </style>
