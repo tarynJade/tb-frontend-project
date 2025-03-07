@@ -2,8 +2,8 @@
     <nav>
       <ul>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/breeds">Cat Breeds</RouterLink>
-        <RouterLink to="/breed-of-the-day">Cat Breed Of The Day</RouterLink>
+        <RouterLink to="/cats">Cats</RouterLink>
+        <RouterLink to="/cat-of-the-day">Cat Of The Day</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
       </ul>
     </nav>
@@ -18,11 +18,12 @@ export default {
 <style scoped>
 nav {
   width: 100%;
-  padding: 10px 0;
-  position: fixed;
-  top: 20px;
-  left: 0;
-  z-index: 10;
+  padding: 20px;
+  position:sticky;
+  border: 1px solid #A12B44;
+  background-color: #A12B44;
+  top: 0;
+  z-index: 0;
 }
 
 ul {
@@ -38,7 +39,7 @@ nav a {
   font-size: 25px;
   font-weight: bolder;
   text-decoration: none;
-  color: #A12B44;
+  color: #F4AFAB;
 }
 
 nav a:hover {
