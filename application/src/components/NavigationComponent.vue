@@ -2,8 +2,8 @@
     <nav>
       <ul>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/breeds">Cat Breeds</RouterLink>
-        <RouterLink to="/breed-of-the-day">Cat Breed Of The Day</RouterLink>
+        <RouterLink to="/cats">Cats</RouterLink>
+        <RouterLink to="/choose-for-me">Choose For Me!</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
       </ul>
     </nav>
