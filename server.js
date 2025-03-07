@@ -11,17 +11,13 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 // Middleware
-app.use(cors({
-  origin: ['http://localhost:8080', 'https://hoppscotch.io'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors());
 app.use(express.json());
 
 // post cat
 app.post('/api/new_cat', async (req, res) => {
   try {
-    const { breed, age } = req.body;
+    const { breed, description, temprement, hypoallergenic, image_url } = req.body;
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
       method: 'POST',
@@ -29,7 +25,7 @@ app.post('/api/new_cat', async (req, res) => {
         'Content-type': 'application/json',
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
       },
-      body: JSON.stringify({ breed, age })
+      body: JSON.stringify({ breed, description, temprement, hypoallergenic, image_url })
     });
 
     if (!response.ok) {
@@ -98,6 +94,60 @@ app.get('/api/get_cat/:breed', async (req, res) => {
   }
 });
 
+// edit cat by ID
+app.patch('/api/edit_cat/:id', async (req, res) => {
+  try {
+    const { id, breed, description, temperament, hypoallergenic, image_url  } = req.body;
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({ id, breed, description, temperament, hypoallergenic, image_url  })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Supabase returned ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+
+  } catch (error) {
+    console.error('POST request error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// delete cat by ID
+
+app.delete('/api/delete_cat/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({ id})
+    });
+
+    if (!response.ok) {
+      throw new Error(`Supabase returned ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+
+  } catch (error) {
+    console.error('POST request error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Start server
 app.listen(PORT, () => {
