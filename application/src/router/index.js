@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import BreedsView from '@/views/BreedsView.vue'
+import CatsView from '@/views/CatsView.vue'
+import CatView from '@/views/CatView.vue'
+import LoginView from '@/views/LoginView.vue'
+import CatOfTheDayView from '@/views/CatOfTheDayView.vue'
 
 const routes = [
     {
@@ -9,9 +12,13 @@ const routes = [
         component: HomeView
     },
     {
-        path: '/breeds',
-        name: 'breeds',
-        component: BreedsView
+        path: '/cats',
+        name: 'cats-view',
+        component: CatsView
+    },
+    {   path: '/cat/:breed',
+        name: 'cat', 
+        component: CatView
     }
 ]
 
