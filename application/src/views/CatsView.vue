@@ -16,40 +16,33 @@
   <div v-if="loading">Loading cat information...</div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
 import { getCats, getHypoallegenicCats } from "@/services/catService";
 import NavigationComponent from "@/components/NavigationComponent.vue";
 
-export default {
-  name: "CatsView",
-  components: { NavigationComponent },
+const cats = ref([]);
+const error = ref(null);
+const loading = ref(true);
 
-  data() {
-    return {
-      cats: [],
-      error: null,
-      loading: true,
-    };
-  },
-  methods: {
-    async getCatsFromService() {
-      try {
-        this.cats = await getCats();
-      } catch (error) {
-        console.error("Error:", error);
-        this.error = "Failed to load cat breeds.";
-      } finally {
-        this.loading = false;
-      }
-    },
-    sortCats() {
-      this.cats = getHypoallegenicCats(this.cats);
-    },
-  },
-  mounted() {
-    this.getCatsFromService();
-  },
+const getCatsFromService = async () => {
+  try {
+    cats.value = await getCats();
+  } catch (err) {
+    console.error("Error:", err);
+    error.value = "Failed to load cat breeds.";
+  } finally {
+    loading.value = false;
+  }
 };
+
+const sortCats = () => {
+  cats.value = getHypoallegenicCats(cats.value);
+};
+
+onMounted(() => {
+  getCatsFromService();
+});
 </script>
 
 <style scoped>
