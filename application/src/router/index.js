@@ -39,6 +39,11 @@ const routes = [
     name: "addCat",
     component: CatForm,
   
+  },
+  {
+    path: "/cats/edit",
+    name: "editCat",
+    component: EditCatForm,
   }
 ];
 
