@@ -19,10 +19,10 @@ const routes = [
     name: "cats-view",
     component: CatsView,
   },
-  { 
-    path: "/cat/:id", 
-    name: "cat", 
-    component: CatView 
+  {
+    path: "/cat/:id",
+    name: "cat",
+    component: CatView,
   },
   {
     path: "/choose-for-me",
@@ -38,13 +38,17 @@ const routes = [
     path: "/cats/add",
     name: "addCat",
     component: CatForm,
-  
   },
   {
     path: "/cats/edit",
     name: "editCat",
     component: EditCatForm,
-  }
+  },
+  {
+    path: "/cats/delete",
+    name: "deleteCat",
+    component: DeleteCatForm,
+  },
 ];
 
 const router = createRouter({
