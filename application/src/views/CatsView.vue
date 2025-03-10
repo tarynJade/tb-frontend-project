@@ -1,10 +1,19 @@
 <template>
   <NavigationComponent />
-  <button @click="sortCats">Sort Cats</button>
+    
+  <div class="search-container">
+    <input
+      type="text"
+      class="search-input"
+      v-model="searchQuery"
+      placeholder="Enter breed to search"
+    />
+    <button @click="sortCats =!sortCats" >{{ sortButtonText }}</button>
+  </div>
 
   <div class="breeds">
     <div class="cat-list">
-      <div v-for="cat in cats" :key="cat.id" class="cat-card">
+      <div v-for="cat in displayedCats" :key="cat.id" class="cat-card">
         <router-link :to="'/cat/' + cat.id">
           <img :src="cat.image_url" :alt="cat.breed" />
           <h3>{{ cat.breed }}</h3>
@@ -17,13 +26,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed} from "vue";
 import { getCats, getHypoallegenicCats } from "@/services/catService";
 import NavigationComponent from "@/components/NavigationComponent.vue";
 
 const cats = ref([]);
+const sortCats = ref(false);
 const error = ref(null);
 const loading = ref(true);
+const searchQuery = ref(""); 
 
 const getCatsFromService = async () => {
   try {
@@ -36,9 +47,17 @@ const getCatsFromService = async () => {
   }
 };
 
-const sortCats = () => {
-  cats.value = getHypoallegenicCats(cats.value);
-};
+const displayedCats = computed(() => {
+  let result = sortCats.value ? getHypoallegenicCats(cats.value) : cats.value;
+  
+  if (searchQuery.value) {
+    const lowerCaseQuery = searchQuery.value.toLowerCase();
+    result = result.filter(cat => cat.breed.toLowerCase().includes(lowerCaseQuery));
+  }
+  return result;
+});
+
+const sortButtonText = computed(() => sortCats.value ? "All Cats" : "Hypoallegenic Cats");
 
 onMounted(() => {
   getCatsFromService();
@@ -86,13 +105,25 @@ onMounted(() => {
   padding: 10px;
 }
 
+.search-container {
+  display: flex;
+  justify-content:space-around;
+  margin-top: 30px;  
+}
+.search-input {
+  padding: 8px; 
+  border-radius: 20px;
+  border: 2px solid #a12b44;
+  font-size: 0.9rem; 
+  width: 300px;  
+}
+
 a {
   text-decoration: none;
 }
 
 button {
   margin: 10px;
-  padding: 15px 30px;
   color: beige;
   border-radius: 10px;
   background-color: #a12b44;
