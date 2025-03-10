@@ -160,6 +160,7 @@ app.put("/api/edit_cat/:id", async (req, res) => {
 app.delete("/api/delete_cat/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const parsedId = parseInt(id, 10);
 
     const response = await fetch(`${SUPABASE_URL}/functions/v1/cats`, {
       method: "DELETE",
@@ -167,7 +168,7 @@ app.delete("/api/delete_cat/:id", async (req, res) => {
         "Content-type": "application/json",
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ id: parsedId }),
     });
 
     if (!response.ok) {
