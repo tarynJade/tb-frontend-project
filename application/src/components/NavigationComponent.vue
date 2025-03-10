@@ -4,18 +4,12 @@
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/cats">Cats</RouterLink>
         <RouterLink to="/choose-for-me">Choose For Me!</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink to="/Admin">Admin</RouterLink>
       </ul>
     </nav>
 </template>
 
-<script>
-export default {
-  name: 'NavigationComponent'
-}
-</script>
-
-<style scoped>
+<style>
 nav {
   width: 100%;
   padding: 20px;
