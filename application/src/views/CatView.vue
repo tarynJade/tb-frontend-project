@@ -2,7 +2,7 @@
   <NavigationComponent />
   <div class="cat-info">
     <div v-if="cat" class="cat-container">
-      <img :src="cat.image_url" :alt="cat.breed">
+      <img :src="cat.image_url" :alt="cat.breed" />
       <h3>{{ cat.breed }}</h3>
       <div class="cat-details">
         <p>Description: {{ cat.description }}</p>
@@ -17,41 +17,25 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue"; 
+import { useRoute } from "vue-router";
+import { getCatById } from "@/services/catService";
 import NavigationComponent from "@/components/NavigationComponent.vue";
 
-export default {
-  name: "CatView",
-  components: { NavigationComponent },
-  data() {
-    return {
-      cat: null,
-      error: null
-    };
-  },
-  methods: {
-    async getCat() {
-      try {
-        const catBreed = this.$route.params.breed; 
+const route = useRoute();
+const cat = ref(null);
+const error = ref(null);
 
-        const response = await fetch(`/api/get_cat/${catBreed}`);
-        if (!response.ok) throw new Error(`Error: ${response.status}`);
-        
-        this.cat = await response.json();
-
-        if (!this.cat) {
-          throw new Error("Cat not found");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        this.error = "Failed to load cat details.";
-      }
-    }
-  },
-  mounted() {
-    this.getCat();
+onMounted(async () => {
+  const id = route.params.id; 
+  try {
+    cat.value = await getCatById(id);
+  } catch (error) {
+    console.error("Error:", error);
+    error.value = "Failed to load cat.";
   }
-};
+});
 </script>
 
 <style>
@@ -60,7 +44,4 @@ img {
   height: 250px;
   border-radius: 10px;
 }
-
 </style>
-
-  

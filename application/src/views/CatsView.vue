@@ -1,65 +1,55 @@
 <template>
   <NavigationComponent />
-  <button @click="sortCats">Sort Cats </button>
+  <button @click="sortCats">Sort Cats</button>
+
   <div class="breeds">
     <div class="cat-list">
       <div v-for="cat in cats" :key="cat.id" class="cat-card">
-        <router-link :to="'/cat/' + cat.breed">
-          <img :src="cat.image_url" :alt="cat.breed">
+        <router-link :to="'/cat/' + cat.id">
+          <img :src="cat.image_url" :alt="cat.breed" />
           <h3>{{ cat.breed }}</h3>
         </router-link>
       </div>
     </div>
   </div>
+  <div v-if="error">{{ error }}</div>
+  <div v-if="loading">Loading cat information...</div>
 </template>
 
 <script>
+import { getCats, getHypoallegenicCats } from "@/services/catService";
 import NavigationComponent from "@/components/NavigationComponent.vue";
 
 export default {
-  name: 'CatsView',
+  name: "CatsView",
   components: { NavigationComponent },
-  
+
   data() {
     return {
       cats: [],
-      error: null
-    }
+      error: null,
+      loading: true,
+    };
   },
   methods: {
-    async getCats() {
+    async getCatsFromService() {
       try {
-        const response = await fetch('/api/get_cats')
-        if (!response.ok) throw new Error(`Error: ${response.status}`)
-        const data = await response.json()
-        this.cats = data
+        this.cats = await getCats();
       } catch (error) {
-        console.error('Error:', error)
-        this.error = 'Failed to load cat breeds.'
+        console.error("Error:", error);
+        this.error = "Failed to load cat breeds.";
+      } finally {
+        this.loading = false;
       }
     },
-      sortCats() {
-        if(this.cats.length === 0) {
-          console.log("No cats to sort");
-        }
-        this.cats.sort((a, b) => {
-          let catA = a.breed.toLowerCase(),
-              catB = b.breed.toLowerCase();
-          if (catA < catB) {
-            return -1;
-          }
-          if (catA > catB) {
-            return 1;
-          }
-          return 0;
-        });
-      },
-      
+    sortCats() {
+      this.cats = getHypoallegenicCats(this.cats);
+    },
   },
   mounted() {
-    this.getCats()
-  }
-}
+    this.getCatsFromService();
+  },
+};
 </script>
 
 <style scoped>
@@ -82,9 +72,9 @@ export default {
   margin: 20px;
   margin-top: 30px;
   padding: 10px;
-  border: 1px solid #A12B44;
+  border: 1px solid #a12b44;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px #A12B44;
+  box-shadow: 5px 5px 5px #a12b44;
   text-align: center;
 }
 
@@ -95,10 +85,10 @@ export default {
 }
 
 .cat-card h3 {
-  color:bisque;
-  background-color: #A12B44;
+  color: bisque;
+  background-color: #a12b44;
   font-size: 100%;
-  border: 2px solid #A12B44;
+  border: 2px solid #a12b44;
   border-radius: 10px;
   padding: 10px;
 }
@@ -107,15 +97,14 @@ a {
   text-decoration: none;
 }
 
-button{
+button {
   margin: 10px;
   padding: 15px 30px;
   color: beige;
   border-radius: 10px;
-  background-color: #A12B44;
+  background-color: #a12b44;
   border: 0;
   font-weight: 700;
   cursor: pointer;
 }
-
 </style>
