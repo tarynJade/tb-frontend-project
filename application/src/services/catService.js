@@ -11,12 +11,11 @@ export const getCats = async () => {
     throw new Error(`Error: ${response.status}`);
   }
 
-  return await response.json(); 
+  return await response.json();
 };
 
 // Get a single cat by ID
 export const getCatById = async (id) => {
-  
   const response = await fetch(`/api/get_cat/${id}`, {
     method: "GET",
     headers: {
@@ -28,7 +27,7 @@ export const getCatById = async (id) => {
     throw new Error(`Error: ${response.status}`);
   }
 
-  return await response.json(); 
+  return await response.json();
 };
 
 // Create a new cat (POST request)
@@ -39,7 +38,6 @@ export const postCat = async (
   hypoallergenic,
   image_url
 ) => {
-
   const response = await fetch(`/api/new_cat`, {
     method: "POST",
     headers: {
@@ -63,14 +61,13 @@ export const postCat = async (
 
 // Update an existing cat (PUT request)
 export const updateCat = async (cat) => {
-
   const response = await fetch(`/api/edit_cat/${cat.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: cat.id, 
+      id: cat.id,
       breed: cat.breed,
       description: cat.description,
       temperament: cat.temperament,
@@ -88,7 +85,22 @@ export const updateCat = async (cat) => {
   return await response.json();
 };
 
+export const deleteCat = async (id) => {
+  const response = await fetch(`/api/delete_cat/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+
+  return await response.json();
+};
+
 // Sort cats by hypoallergenic status
 export const getHypoallegenicCats = (cats) => {
-  return cats.filter(cat => cat.hypoallergenic === true);
+  return cats.filter((cat) => cat.hypoallergenic === true);
 };
