@@ -104,3 +104,16 @@ export const deleteCat = async (id) => {
 export const getHypoallegenicCats = (cats) => {
   return cats.filter((cat) => cat.hypoallergenic === true);
 };
+
+// Get a random cat
+export const getRandomCat = async () => {
+  try {
+    const response = await fetch('/api/get_cats'); 
+    if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+    const data = await response.json();
+    return data[Math.floor(Math.random() * data.length)];
+  } catch (err) {
+    throw new Error('Failed to load cat breeds');
+  }
+};
