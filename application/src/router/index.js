@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import CatsView from "@/views/CatsView.vue";
 import CatView from "@/views/CatView.vue";
-import LoginView from "@/views/LoginView.vue";
 import RandomCatView from "@/views/RandomCatView.vue";
 import CatForm from "@/views/AddCatForm.vue";
 import DeleteCatForm from "@/views/DeleteCatForm.vue";
 import EditCatForm from "@/views/EditCatForm.vue";
+import AdminView from "@/views/AdminView.vue";
 
 const routes = [
   {
@@ -30,9 +30,9 @@ const routes = [
     component: RandomCatView,
   },
   {
-    path: "/login",
-    name: "login",
-    component: LoginView,
+    path: "/Admin",
+    name: "admin",
+    component: AdminView,
   },
   {
     path: "/cats/add",
