@@ -50,7 +50,7 @@ Connects to supabase and handles
 First install dependencies:  ``npm install``
 
 To serve the frontend with data from the backend run 
-``node server.js`` from the root of the project. Data can be view via the api endpoints
+``node server.js`` from the root of the project. Data can be viewed via the api endpoints
 
 To run the frontend Vue UI navigate to the application ``cd application`` and run ``npm run serve``. Here you can navigate through the website and perform CRUD operations. 
 
