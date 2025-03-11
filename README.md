@@ -23,6 +23,7 @@ This project serves as the frontend application for managing cat data. It also i
 - **Sort Hypoallergenic Cats** – Allows users to filter and display only hypoallergenic cats.
 - **Search by Breed** – Users can search for cats by typing in their breed name.
 - **View Cat Details** – Clicking on a cat will show more detailed information about it.
+- **Choose for me option** - Randomly generates a cat for the user to view.
 - **Admin Tab** – Provides forms where an admin can:
     - Add a New Cat to the database.
     - Edit a Cat’s details.
