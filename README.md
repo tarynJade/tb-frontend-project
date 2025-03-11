@@ -33,13 +33,8 @@ This project serves as the frontend application for managing cat data. It also i
 
 Connects to supabase and handles 
 
-- Fetching all cats via GET request``api/get_cats```
-    - Example request: 
-
-    - Response: 
-
-
- 
+- Fetching all cats via GET request``api/get_cats``
+  
 - Fetching a cat by its ID via GET request ``api/get_cat/:id``
 
 - Adding a new cat via POST request ``api/new_cat``
@@ -61,14 +56,5 @@ To run the frontend Vue UI navigate to the application ``cd application`` and ru
 ## Testing 
 
 - There is a test folder that tests middlewear API calls in catService these can be run by running ``npx vitest``
-
-## Video demonstration 
-
-### Frontend: 
-
-
-
-
-### Backend testing requests via Postman: 
 
 
